@@ -4,8 +4,17 @@ using Tharga.Fortnox.Internals;
 
 namespace Tharga.Fortnox;
 
-public static class ThargaFortnoxExtensions
+/// <summary>
+/// Tharga Fortnox Registration.
+/// </summary>
+public static class ThargaFortnoxRegistration
 {
+    /// <summary>
+    /// Add Tharga Fortnox to IOC.
+    /// </summary>
+    /// <param name="services"></param>
+    /// <param name="options"></param>
+    /// <returns></returns>
     public static IServiceCollection AddThargaFortnox(this IServiceCollection services, Action<Options> options = null)
     {
         var fortnoxConfiguration = new Options();

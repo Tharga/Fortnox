@@ -1,8 +1,9 @@
 ﻿namespace Tharga.Fortnox;
 
-//NOTE: Florida kräver licenser för Order. (Det skulle gå att ha Kundfaktura istället, fast då kan man inte skapa följesedlar och ordrar)
-//https://www.fortnox.se/developer/guides-and-good-to-know/scopes
-
+/// <summary>
+/// Specification for different access scopes.
+/// https://www.fortnox.se/developer/guides-and-good-to-know/scopes
+/// </summary>
 [Flags]
 public enum FortnoxScope
 {

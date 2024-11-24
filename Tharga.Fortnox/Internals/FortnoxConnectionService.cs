@@ -18,21 +18,21 @@ internal class FortnoxConnectionService : IFortnoxConnectionService
         _redirectUri = new Lazy<string>(() =>
         {
             var redirectUri = options.RedirectUri?.OriginalString ?? configuration.GetSection($"Fortnox:{nameof(Options.RedirectUri)}").Value;
-            if (string.IsNullOrEmpty(redirectUri)) throw new InvalidOperationException($"Cannot find configuration for {nameof(Options.RedirectUri)} in {nameof(IConfiguration)} as 'Fortnox:{nameof(Options.RedirectUri)}' or as an option provided with {nameof(ThargaFortnoxExtensions.AddThargaFortnox)}.");
+            if (string.IsNullOrEmpty(redirectUri)) throw new InvalidOperationException($"Cannot find configuration for {nameof(Options.RedirectUri)} in {nameof(IConfiguration)} as 'Fortnox:{nameof(Options.RedirectUri)}' or as an option provided with {nameof(ThargaFortnoxRegistration.AddThargaFortnox)}.");
             return redirectUri;
         });
 
         _clientSecret = new Lazy<string>(() =>
         {
             var clientSecret = options.ClientSecret ?? configuration.GetSection($"Fortnox:{nameof(Options.ClientSecret)}").Value;
-            if (string.IsNullOrEmpty(clientSecret)) throw new InvalidOperationException($"Cannot find configuration for {nameof(Options.ClientSecret)} in {nameof(IConfiguration)} as 'Fortnox:{nameof(Options.ClientSecret)}' or as an option provided with {nameof(ThargaFortnoxExtensions.AddThargaFortnox)}.");
+            if (string.IsNullOrEmpty(clientSecret)) throw new InvalidOperationException($"Cannot find configuration for {nameof(Options.ClientSecret)} in {nameof(IConfiguration)} as 'Fortnox:{nameof(Options.ClientSecret)}' or as an option provided with {nameof(ThargaFortnoxRegistration.AddThargaFortnox)}.");
             return clientSecret;
         });
 
         _clientId = new Lazy<string>(() =>
         {
             var clientId = options.ClientId ?? configuration.GetSection($"Fortnox:{nameof(Options.ClientId)}").Value;
-            if (string.IsNullOrEmpty(clientId)) throw new InvalidOperationException($"Cannot find configuration for {nameof(Options.ClientId)} in {nameof(IConfiguration)} as 'Fortnox:{nameof(Options.ClientId)}' or as an option provided with {nameof(ThargaFortnoxExtensions.AddThargaFortnox)}.");
+            if (string.IsNullOrEmpty(clientId)) throw new InvalidOperationException($"Cannot find configuration for {nameof(Options.ClientId)} in {nameof(IConfiguration)} as 'Fortnox:{nameof(Options.ClientId)}' or as an option provided with {nameof(ThargaFortnoxRegistration.AddThargaFortnox)}.");
             return clientId;
         });
     }
