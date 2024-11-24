@@ -46,7 +46,7 @@ stages:
         command: 'push'
         packagesToPush: '$(Build.ArtifactStagingDirectory)/*.nupkg'
         nuGetFeedType: 'internal'
-        publishVstsFeed: 'eda8985f-7491-4ceb-b57f-a6ce8a0c96d4'
+        publishVstsFeed: 'df4b267e-c55c-4a36-8fe3-8e98d5d8dbbb/5cea672d-cb79-44f6-beb8-2eaba59e670d'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish artifacts'
@@ -57,12 +57,11 @@ stages:
 - stage: Release
   displayName: Release
   dependsOn: Build
-  condition: |
-    and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranchName'], 'master'))
   jobs:
+
   - job: Release
     displayName: Release
-
     steps:
     - download: current
       artifact: drop
@@ -77,5 +76,8 @@ stages:
         nuGetFeedType: 'external'
         publishFeedCredentials: 'Nuget.org'
 
-    - task: jabbera.git-tag-on-release-task.git-tag-on-release-task.git-tag-on-release-task@9
-      displayName: 'Tag Artifacts'
+    - script: |
+         git tag $(Build.BuildNumber)
+         git push origin $(Build.BuildNumber)
+      workingDirectory: $(Build.SourcesDirectory)
+      displayName: Tag
