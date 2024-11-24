@@ -163,3 +163,78 @@ The *refreshToken* can only be used once, if it fails the connection will have t
 
 To disconnect the application simply use *DisconnectAsync* in *IFortnoxConnectionService*.
 This only requires the *refreshToken*.
+
+### Full example of the Backend controller
+In this example the *tenantId* is used as a central concept. There are no examples for autnentication and assurance that the correct tehhent have access, this code you have to add to have a safe solution.
+```
+[Authorize]
+[ApiController]
+[Route("api/[controller]")]
+public class FortnoxController : ControllerBase
+{
+    private readonly IFortnoxConnectionService _fortnoxConnectionService;
+
+    public FortnoxController(IFortnoxConnectionService fortnoxConnectionService)
+    {
+        _fortnoxConnectionService = fortnoxConnectionService;
+    }
+
+    [HttpGet]
+    [Route("link")]
+    public async Task<IActionResult> BuildConnectLinkUri([FromHeader] string tenantId)
+    {
+        if (string.IsNullOrEmpty(tenantId)) return BadRequest($"No {nameof(tenantId)} provided");
+
+        var requestKey = Guid.NewGuid();
+
+        //TODO: Store current tenant with the requestKey, so you can connect them when the callback comes from Fortnox.
+
+        //TODO: Select what scopes your application requires.
+        var scopes = FortnoxScope.CompanyInformation | FortnoxScope.Bookkeeping;
+
+        var uri = await _fortnoxConnectionService.BuildConnectUriAsync(requestKey.ToString(), scopes);
+
+        return Ok(uri);
+    }
+
+    [HttpPost]
+    [AllowAnonymous]
+    [Route("connect")]
+    public async Task<IActionResult> Connect(FortnoxAssignment assignment)
+    {
+        if (assignment == null) return BadRequest($"No {nameof(assignment)} provided.");
+
+        var tenantId = "<tennantId>"; //TODO: Get the tenantId using 'assignment.RequestKey' that was stored in 'BuildConnectLinkUri'.
+        if (tenantId == null) throw new InvalidOperationException($"Cannot find tenant for request key '{assignment.RequestKey}'.");
+
+        //NOTE: Perform the actual connection with Fortnox.
+        var tokenDataResult = await _fortnoxConnectionService.ConnectAsync(assignment);
+        if (!tokenDataResult.IsSuccess)
+        {
+            return BadRequest(tokenDataResult.Message);
+        }
+
+        //TODO: Store the token with the tenant.
+
+        //NOTE: Request company information (optional code)
+        var authorization = new StandardAuth(tokenDataResult.Value.AccessToken);
+        var fortnoxClient = new FortnoxClient(authorization);
+        var companyInformation = await fortnoxClient.CompanyInformationConnector.GetAsync();
+
+        return Ok(companyInformation.CompanyName);
+    }
+
+    [HttpPost]
+    [Route("disconnect")]
+    public async Task<IActionResult> Disconnect([FromHeader] string tenantId)
+    {
+        if (string.IsNullOrEmpty(tenantId)) return BadRequest($"No {nameof(tenantId)} provided");
+
+        var refreshToken = "<refreshTokenId>"; //TODO: Get the refreshToken using tenantId.
+
+        await _fortnoxConnectionService.DisconnectAsync(refreshToken);
+
+        return Ok();
+    }
+}
+```
