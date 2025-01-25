@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Tharga.Fortnox.Internals;
+namespace Tharga.Fortnox;
 
 internal class FortnoxConnectionService : IFortnoxConnectionService
 {
