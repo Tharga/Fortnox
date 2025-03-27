@@ -1,4 +1,4 @@
-﻿namespace Tharga.Fortnox.Internals;
+﻿namespace Tharga.Fortnox;
 
 internal static class Constants
 {
