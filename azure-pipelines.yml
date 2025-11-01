@@ -31,7 +31,8 @@ stages:
       inputs:
         command: 'build'
         projects: '$(solution)'
-        arguments: '-c $(buildConfiguration) --no-restore /p:Version=$(Build.BuildNumber) /p:NoWarn=0618'
+        arguments: '-c $(buildConfiguration) --no-restore /p:Version=$(Build.BuildNumber)'
+        versioningScheme: 'byBuildNumber'
 
     - task: DotNetCoreCLI@2
       displayName: 'Pack Tharga.Fortnox'
