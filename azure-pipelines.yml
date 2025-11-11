@@ -19,6 +19,14 @@ stages:
     displayName: Build and Test
 
     steps:
+    - task: UseDotNet@2
+      displayName: 'Use .NET 10'
+      inputs:
+        version: 10.0.x
+        includePreviewVersions: false
+
+    - task: NuGetToolInstaller@1
+
     - task: DotNetCoreCLI@2
       displayName: 'Restore nuget packages'
       inputs:
