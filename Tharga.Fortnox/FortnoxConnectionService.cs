@@ -60,7 +60,7 @@ internal class FortnoxConnectionService : IFortnoxConnectionService
         client.DefaultRequestHeaders.Add("ClientSecret", ClientSecret);
         var content = new StringContent($"grant_type=authorization_code&code={assignment.Code}&redirect_uri={RedirectUri}", Encoding.UTF8, "application/x-www-form-urlencoded");
         var result = await client.PostAsync("token", content);
-        if (!result.IsSuccessStatusCode) return Result<TokenData>.Fail(result.ReasonPhrase);
+        if (!result.IsSuccessStatusCode) return Result<TokenData>.Fail(result.ReasonPhrase, $"{result.StatusCode}");
 
         var data = await BuildTokenData(result);
         return Result<TokenData>.Success(data);
@@ -72,7 +72,7 @@ internal class FortnoxConnectionService : IFortnoxConnectionService
 
         var content = new StringContent($"grant_type=refresh_token&refresh_token={refreshToken}", Encoding.UTF8, "application/x-www-form-urlencoded");
         var result = await client.PostAsync("token", content);
-        if (!result.IsSuccessStatusCode) return Result<TokenData>.Fail(result.ReasonPhrase);
+        if (!result.IsSuccessStatusCode) return Result<TokenData>.Fail(result.ReasonPhrase, $"{result.StatusCode}");
 
         var data = await BuildTokenData(result);
         return Result<TokenData>.Success(data);
@@ -83,7 +83,7 @@ internal class FortnoxConnectionService : IFortnoxConnectionService
         var client = GetHttpClient();
 
         var result = await client.PostAsync("revoke", new StringContent($"token_type_hint=refresh_token&token={refreshToken}", Encoding.UTF8, "application/x-www-form-urlencoded"));
-        if (!result.IsSuccessStatusCode) return Result.Fail(result.ReasonPhrase);
+        if (!result.IsSuccessStatusCode) return Result.Fail(result.ReasonPhrase, $"{result.StatusCode}");
         return Result.Success;
     }
 
