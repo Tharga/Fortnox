@@ -22,8 +22,9 @@ public record Result<TData> : Result
     /// Build a fail response for your data.
     /// </summary>
     /// <param name="message"></param>
+    /// <param name="code"></param>
     /// <returns></returns>
-    public new static Result<TData> Fail(string message) => new() { Message = message };
+    public new static Result<TData> Fail(string message, string code) => new() { Message = message, Code = code };
 }
 
 /// <summary>
@@ -35,6 +36,11 @@ public record Result
     /// Response message.
     /// </summary>
     public string Message { get; protected init; }
+
+    /// <summary>
+    /// Used for specific mathing of errors.
+    /// </summary>
+    public string Code { get; protected init; }
 
     /// <summary>
     /// True if the call was successful
@@ -50,6 +56,7 @@ public record Result
     /// Build a fail response without data.
     /// </summary>
     /// <param name="message"></param>
+    /// <param name="code"></param>
     /// <returns></returns>
-    public static Result Fail(string message) => new() { Message = message };
+    public static Result Fail(string message, string code) => new() { Message = message, Code = code };
 }
