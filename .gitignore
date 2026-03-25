@@ -96,3 +96,4 @@ _ReSharper.*
 *.datasource
 *.xsd
 /.NCrunch_*/*.executiontimes.cache
+/.claude/settings.local.json
