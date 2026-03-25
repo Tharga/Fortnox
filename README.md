@@ -4,6 +4,16 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub repo Issues](https://img.shields.io/github/issues/Tharga/Fortnox?style=flat&logo=github&logoColor=red&label=Issues)](https://github.com/Tharga/Fortnox/issues?q=is%3Aopen)
 
+## Testing
+
+The solution includes a unit test project `Tharga.Fortnox.Tests` using xUnit and NSubstitute.
+
+```bash
+dotnet test -c Release
+```
+
+Tests cover Result types, FortnoxScope flag values, FortnoxConnectionService (URI building, token exchange, refresh, disconnect), and DI registration.
+
 ## Get started
 
 ### Register in IOC.
