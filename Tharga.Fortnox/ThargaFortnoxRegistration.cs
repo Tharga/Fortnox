@@ -22,6 +22,7 @@ public static class ThargaFortnoxRegistration
         services.AddHttpClient(Constants.ClientName, x => x.BaseAddress = new Uri(Constants.Root));
         services.AddSingleton(_ => fortnoxConfiguration);
         services.AddTransient<IFortnoxConnectionService>(serviceProvider => new FortnoxConnectionService(serviceProvider.GetService<IConfiguration>(), serviceProvider.GetService<IHttpClientFactory>(), serviceProvider.GetService<Options>()));
+        services.AddSingleton<IFortnoxTokenManager>(serviceProvider => new FortnoxTokenManager(serviceProvider.GetRequiredService<IFortnoxConnectionService>(), serviceProvider.GetRequiredService<Options>().TokenManager));
         return services;
     }
 }

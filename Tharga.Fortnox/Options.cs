@@ -19,4 +19,9 @@ public record Options
     /// Fortnox Client Secret.
     /// </summary>
     public string ClientSecret { get; set; }
+
+    /// <summary>
+    /// Configuration for the <see cref="IFortnoxTokenManager"/>.
+    /// </summary>
+    public TokenManagerOptions TokenManager { get; set; } = new();
 }

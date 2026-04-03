@@ -18,7 +18,8 @@
       "Bash(rm .claude/feature.md)",
       "Bash(rm .claude/plan.md)",
       "Bash(grep -E \"\\\\.cs$|^d\")",
-      "Bash(grep -E \"\\\\.\\(csproj|cs\\)$\")"
+      "Bash(grep -E \"\\\\.\\(csproj|cs\\)$\")",
+      "Bash(xargs grep:*)"
     ],
     "additionalDirectories": [
     ]
