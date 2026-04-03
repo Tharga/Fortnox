@@ -18,6 +18,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<InternalsVisibleTo Include="Tharga.Fortnox.Tests" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<None Include="README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>

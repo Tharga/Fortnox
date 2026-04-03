@@ -4,6 +4,16 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![GitHub repo Issues](https://img.shields.io/github/issues/Tharga/Fortnox?style=flat&logo=github&logoColor=red&label=Issues)](https://github.com/Tharga/Fortnox/issues?q=is%3Aopen)
 
+## Testing
+
+The solution includes a unit test project `Tharga.Fortnox.Tests` using xUnit and NSubstitute.
+
+```bash
+dotnet test -c Release
+```
+
+Tests cover Result types, FortnoxScope flag values, FortnoxConnectionService (URI building, token exchange, refresh, disconnect), and DI registration.
+
 ## Get started
 
 ### Register in IOC.
@@ -163,6 +173,66 @@ The *refreshToken* can only be used once, if it fails the connection will have t
 
 To disconnect the application simply use *DisconnectAsync* in *IFortnoxConnectionService*.
 This only requires the *refreshToken*.
+
+## Token Manager
+
+For services that make repeated Fortnox API calls, *IFortnoxTokenManager* provides automatic token caching and thread-safe refresh. Instead of manually checking expiry and calling *RefreshTokenAsync*, inject *IFortnoxTokenManager* and call *GetAccessTokenAsync*.
+
+```csharp
+public class MyFortnoxService
+{
+    private readonly IFortnoxTokenManager _tokenManager;
+
+    public MyFortnoxService(IFortnoxTokenManager tokenManager)
+    {
+        _tokenManager = tokenManager;
+    }
+
+    public async Task DoWorkAsync(string companyId)
+    {
+        var result = await _tokenManager.GetAccessTokenAsync(
+            companyId,
+            loadToken: () => LoadTokenFromDatabase(companyId),
+            saveToken: token => SaveTokenToDatabase(companyId, token));
+
+        if (!result.IsSuccess)
+        {
+            // Handle failure — token may need re-authorization
+            return;
+        }
+
+        var accessToken = result.Value;
+        // Use accessToken for Fortnox API calls...
+    }
+}
+```
+
+The token manager:
+- **Caches tokens in memory** per key, avoiding repeated database reads.
+- **Refreshes proactively** before expiry (configurable buffer, default 60 seconds).
+- **Prevents concurrent refresh races** using per-key locking. If multiple threads request the same key simultaneously, only one performs the refresh — the others wait and reuse the result.
+- **Is storage-agnostic** — you provide `loadToken` and `saveToken` delegates for your persistence layer.
+- Supports **multiple concurrent Fortnox connections** (e.g. per company or tenant), each managed independently.
+
+### Configuration
+
+The refresh buffer can be configured via `AddThargaFortnox`:
+```csharp
+builder.Services.AddThargaFortnox(o =>
+{
+    o.ClientId = "...";
+    o.ClientSecret = "...";
+    o.RedirectUri = new Uri("...");
+    o.TokenManager = new TokenManagerOptions
+    {
+        RefreshBufferSeconds = 120 // refresh 2 minutes before expiry
+    };
+});
+```
+
+### Limitation: single-instance only
+
+The in-memory token cache is **not shared across server instances**. If multiple servers use the same Fortnox connection, one server's token refresh will invalidate the refresh token cached on other instances (Fortnox refresh tokens are single-use). For multi-instance deployments, consider implementing a distributed cache or coordinating refresh through a shared data store.
 
 ### Full example of the Backend controller
 In this example the *tenantId* is used as a central concept. There are no examples for autnentication and assurance that the correct tehhent have access, this code you have to add to have a safe solution.

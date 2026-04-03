@@ -1,8 +1,6 @@
 trigger:
 - master
 
-name: 1.2.$(Rev:r)
-
 pool:
   vmImage: 'windows-latest'
 
@@ -10,6 +8,7 @@ variables:
   solution: '**/Tharga.Fortnox.sln'
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
+  majorMinor: '1.3'
 
 stages:
 - stage: Build
@@ -19,6 +18,12 @@ stages:
     displayName: Build and Test
 
     steps:
+    - checkout: self
+
+    - template: buildnumber.yml
+      parameters:
+        majorMinor: ${{ variables.majorMinor }}
+
     - task: UseDotNet@2
       displayName: 'Use .NET 10'
       inputs:
@@ -41,6 +46,13 @@ stages:
         projects: '$(solution)'
         arguments: '-c $(buildConfiguration) --no-restore /p:Version=$(Build.BuildNumber)'
         versioningScheme: 'byBuildNumber'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'Test'
+      inputs:
+        command: 'test'
+        projects: '$(solution)'
+        arguments: '-c $(buildConfiguration) --no-build'
 
     - task: DotNetCoreCLI@2
       displayName: 'Pack Tharga.Fortnox'
