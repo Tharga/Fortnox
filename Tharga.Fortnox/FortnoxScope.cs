@@ -11,164 +11,137 @@ public enum FortnoxScope
     /// License: Any
     /// Resouce: Company Information
     /// </summary>
-    CompanyInformation = 1,
+    CompanyInformation = 1 << 0,
 
     /// <summary>
     /// License: Kundfaktura or Order
     /// Resouce: Customers
     /// </summary>
-    Customer = 2,
+    Customer = 1 << 1,
 
     /// <summary>
     /// License: Order or Kundfaktura
     /// Resouce: Articles, Article URL Connections
     /// </summary>
-    Article = 4,
+    Article = 1 << 2,
 
     /// <summary>
     /// License: Order
     /// Resouce: Offers
     /// </summary>
-    Offer = 8,
+    Offer = 1 << 3,
 
     /// <summary>
     /// License: Order
     /// Resouce: Orders
     /// </summary>
-    Order = 16,
+    Order = 1 << 4,
 
     /// <summary>
     /// License: Order or Kundfaktura
     /// Resouce: Contract Accruals, Contract Templates, Contracts, Invoice Accruals, Invoices, Tax Reductions
     /// </summary>
-    Invoice = 32,
+    Invoice = 1 << 5,
 
     /// <summary>
     /// License: Order or Kundfaktura
     /// Resouce: Print Templates
     /// </summary>
-    Print = 64,
+    Print = 1 << 6,
 
     /// <summary>
     /// License: Bokföring or Kundfaktura
     /// Resouce: Account Charts, Accounts, Financial Years, SIE, Voucher External URL Connections, Voucher Series, Vouchers.
     /// </summary>
-    Bookkeeping = 128,
+    Bookkeeping = 1 << 7,
 
     /// <summary>
     /// License: Any
     /// Resouce: Company Settings, Labels, Mode Of Payments, PredefinedAccounts, Terms Of Deliveries, Terms Of Payments, Units, Way Of Deliveries
     /// </summary>
-    Settings = 256,
+    Settings = 1 << 8,
 
     /// <summary>
     /// License: Order or Kundfaktura
     /// Resouce: Price Lists, Prices
     /// </summary>
-    Price = 512,
+    Price = 1 << 9,
 
     /// <summary>
     /// License: Any
     /// Resouce: Archive
     /// </summary>
-    Archive = 1024,
+    Archive = 1 << 10,
 
     /// <summary>
     /// License: Bokföring or Anläggning or Arkivplats
     /// Resouce: Article File Connections, Supplier Invoice File Connections, Voucher File Connections
     /// </summary>
-    ConnectFile = 2048,
+    ConnectFile = 1 << 11,
 
     /// <summary>
     /// License: Bokföring or Order or Kundfaktura
     /// Resouce: Cost Centers
     /// </summary>
-    CostCenter = 4096,
+    CostCenter = 1 << 12,
 
     /// <summary>
     /// License: Bokföring or Order or Kundfaktura
     /// Resouce: Currencies
     /// </summary>
-    Currency = 8192,
+    Currency = 1 << 13,
 
     /// <summary>
     /// License: Any
     /// Resouce: Inbox
     /// </summary>
-    Inbox = 16384,
+    Inbox = 1 << 14,
 
     /// <summary>
     /// License: Kundfaktura
     /// Resouce: Nox Finans Invoice
     /// </summary>
-    NoxFinansInvoice = 32768,
+    NoxFinansInvoice = 1 << 15,
 
     /// <summary>
     /// License: Bokföring or Order or Kundfaktura
     /// Resouce: Invoice Payments, Supplier Invoice Payments
     /// </summary>
-    Payment = 65536,
+    Payment = 1 << 16,
 
     /// <summary>
     /// License: Any
     /// Resouce: Profile
     /// </summary>
-    Profile = 131072,
+    Profile = 1 << 17,
 
     /// <summary>
     /// License: Bokföring or Order or Kundfaktura
     /// Resouce: Projects
     /// </summary>
-    Project = 262144,
+    Project = 1 << 18,
 
     /// <summary>
     /// License: Lön
     /// Resouce: Absence transactions, Attendance transactions, Employees, Expenses, Salary transactions, Schedule times, Vacation Debt Basis
     /// </summary>
-    Salary = 524288,
+    Salary = 1 << 19,
 
     /// <summary>
     /// License: Bokföring
     /// Resouce: Suppliers
     /// </summary>
-    Supplier = 1048576,
+    Supplier = 1 << 20,
 
     /// <summary>
     /// License: Bokföring
     /// Resouce: Supplier Invoice Accruals, Supplier Invoice External URL Connections, Supplier Invoices
     /// </summary>
-    SupplierInvoice = 2097152,
+    SupplierInvoice = 1 << 21,
 
     /// <summary>
     /// License: Tidredovisning
     /// Resouce: Time Reporting
     /// </summary>
-    TimeReporting = 4194304,
-
-    //TODO: Try to use this. Check if the numbers are the same
-    /*
-       CompanyInformation   = 1 << 0,
-       Customer             = 1 << 1,
-       Article              = 1 << 2,
-       Offer                = 1 << 3,
-       Order                = 1 << 4,
-       Invoice              = 1 << 5,
-       Print                = 1 << 6,
-       Bookkeeping          = 1 << 7,
-       Settings             = 1 << 8,
-       Price                = 1 << 9,
-       Archive              = 1 << 10,
-       ConnectFile          = 1 << 11,
-       CostCenter           = 1 << 12,
-       Currency             = 1 << 13,
-       Inbox                = 1 << 14,
-       NoxFinansInvoice     = 1 << 15,
-       Payment              = 1 << 16,
-       Profile              = 1 << 17,
-       Project              = 1 << 18,
-       Salary               = 1 << 19,
-       Supplier             = 1 << 20,
-       SupplierInvoice      = 1 << 21,
-       TimeReporting        = 1 << 22
-     */
+    TimeReporting = 1 << 22,
 }
