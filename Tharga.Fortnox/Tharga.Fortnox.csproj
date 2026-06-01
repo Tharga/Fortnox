@@ -7,7 +7,7 @@
 		<Company>Thargelion AB</Company>
 		<Product>Tharga Fortnox</Product>
 		<Description>Handling of Fortnox authentication keys.</Description>
-		<PackageIconUrl>http://thargelion.se/wp-content/uploads/2019/11/Thargelion-White-Icon-150.png</PackageIconUrl>
+		<PackageIconUrl>https://thargelion.net/assets/component-fortnox.png</PackageIconUrl>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageProjectUrl>https://github.com/Tharga/Fortnox</PackageProjectUrl>
