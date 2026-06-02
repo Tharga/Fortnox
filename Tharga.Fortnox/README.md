@@ -21,6 +21,6 @@ builder.Services.AddThargaFortnox(o =>
 
 ## Documentation
 
-Full guides, the connection-flow walkthrough, scopes reference, and API docs: [fortnox.tharga.net](https://fortnox.tharga.net).
+Full guides, the connection-flow walkthrough, scopes reference, and API docs: [fortnox.tharga.net](http://fortnox.tharga.net).
 
 [![GitHub repo](https://img.shields.io/github/repo-size/Tharga/Fortnox?style=flat&logo=github&logoColor=red&label=Repo)](https://github.com/Tharga/Fortnox)
