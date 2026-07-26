@@ -104,9 +104,9 @@ internal class FortnoxConnectionService : IFortnoxConnectionService
         var data = new TokenData
         {
             CreateTime = DateTime.UtcNow,
-            AccessToken = token.access_token,
-            ExpireTime = DateTime.UtcNow.AddSeconds(token.expires_in - 60),
-            RefreshToken = token.refresh_token,
+            AccessToken = token.AccessToken,
+            ExpireTime = DateTime.UtcNow.AddSeconds(token.ExpiresIn - 60),
+            RefreshToken = token.RefreshToken,
         };
         return data;
     }
