@@ -43,18 +43,18 @@ builder.Services.AddThargaFortnox(o =>
 });
 ```
 Configure by *appsettings.json*.
-```
+```json
 {
   "Fortnox": {
+    "ClientId": "<Your Client Id here>",
     "ClientSecret": "<Your Client Secret here>",
-    "ClientId": "<Your Client Id here>"
-    "RedirectUri": "<Your redirect Url here>",
+    "RedirectUri": "<Your redirect Url here>"
   }
 }
 ```
 
 ## Usage
-This component is intended for a backend service that communicats with front-end.
+This component is intended for a backend service that communicates with a front-end.
 To start using it the user first must grant access to the Fortnox instance.
 This is done with a specific call to Fortnox. A url can be generated using the method *BuildConnectUriAsync* in *IFortnoxConnectionService*.
 
@@ -81,7 +81,7 @@ public async Task<IActionResult> BuildConnectLinkUri([FromHeader] string tenantI
 }
 ```
 
-One the callback is made (to your front end-end) your can extract the information from Fortnox. Here is an example for Blazor WASM.
+Once the callback is made (to your front-end) you can extract the information from Fortnox. Here is an example for Blazor WASM.
 Note that this page have the route of HTTP-GET '/fortnox/connect' and that the code calls a HTTP-POST '/fortnox/connect' to backend.
 
 The callback query contains *code* and *state*. That can be used to connect your application with Fortnox.
@@ -140,6 +140,8 @@ else
 
 The code above will make a POST call to the backend at route 'fortnox/connect' this is where you can perform the actual connection with Fortnox using method *ConnectAsync* in *IFortnoxConnectionService*.
 
+> **Note:** the `FortnoxClient` and `StandardAuth` types in the examples below are **not part of this package** — this package handles authentication only. They come from a separate Fortnox REST client library, included here to show what you would do with the access token once you have it. Substitute whichever Fortnox client you use.
+
 ```
 [HttpPost]
 [AllowAnonymous]
@@ -169,7 +171,7 @@ public async Task<IActionResult> Connect(FortnoxAssignment assignment)
 }
 ```
 
-When theese steps are complete, your backend code can perform calls to Fortnox using the token.
+When these steps are complete, your backend code can perform calls to Fortnox using the token.
 It is valid for one hour and when the call fails you can use *RefreshTokenAsync* in *IFortnoxConnectionService* to renew the token with *refreshToken* as parameter.
 The *refreshToken* can only be used once, if it fails the connection will have to be performed again.
 
@@ -237,7 +239,7 @@ builder.Services.AddThargaFortnox(o =>
 The in-memory token cache is **not shared across server instances**. If multiple servers use the same Fortnox connection, one server's token refresh will invalidate the refresh token cached on other instances (Fortnox refresh tokens are single-use). For multi-instance deployments, consider implementing a distributed cache or coordinating refresh through a shared data store.
 
 ### Full example of the Backend controller
-In this example the *tenantId* is used as a central concept. There are no examples for autnentication and assurance that the correct tehhent have access, this code you have to add to have a safe solution.
+In this example the *tenantId* is used as a central concept. There are no examples for authentication or for ensuring that the correct tenant has access — you have to add that yourself for a safe solution.
 ```
 [Authorize]
 [ApiController]
