@@ -6,7 +6,7 @@
 		<Company>Thargelion AB</Company>
 		<Product>Tharga Fortnox</Product>
 		<Description>Handling of Fortnox authentication keys.</Description>
-		<PackageIcon>icon.png</PackageIcon>
+		<PackageIconUrl>https://thargelion.net/assets/component-fortnox.png</PackageIconUrl>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -15,7 +15,13 @@
 	</PropertyGroup>
 
 	<PropertyGroup>
-		<NoWarn>1701;1702;CS1591</NoWarn>
+		<!--
+			NU5048: PackageIconUrl is deprecated in favour of an embedded PackageIcon.
+			Suppressed deliberately. Tharga packages reference their icon from
+			https://thargelion.net/assets/ so all package icons are maintained in one
+			place and can be updated without republishing a package.
+		-->
+		<NoWarn>1701;1702;CS1591;NU5048</NoWarn>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,10 +30,6 @@
 
 	<ItemGroup>
 		<None Include="README.md">
-			<Pack>True</Pack>
-			<PackagePath>\</PackagePath>
-		</None>
-		<None Include="icon.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
