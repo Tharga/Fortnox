@@ -1,10 +1,27 @@
-﻿namespace Tharga.Fortnox;
+using System.Text.Json.Serialization;
 
+namespace Tharga.Fortnox;
+
+/// <summary>
+/// The OAuth token response returned by Fortnox. Property names are mapped
+/// explicitly because the wire format is snake_case; deserialization is
+/// case-insensitive but does not ignore underscores, so the mapping is
+/// load-bearing.
+/// </summary>
 internal record AccessTokenResponse
 {
-    public string access_token { get; init; }
-    public int expires_in { get; init; }
-    public string token_type { get; init; }
-    public string scope { get; init; }
-    public string refresh_token { get; init; }
+    [JsonPropertyName("access_token")]
+    public string AccessToken { get; init; }
+
+    [JsonPropertyName("expires_in")]
+    public int ExpiresIn { get; init; }
+
+    [JsonPropertyName("token_type")]
+    public string TokenType { get; init; }
+
+    [JsonPropertyName("scope")]
+    public string Scope { get; init; }
+
+    [JsonPropertyName("refresh_token")]
+    public string RefreshToken { get; init; }
 }

@@ -101,3 +101,4 @@ _ReSharper.*
 # DocFX
 docs/_site/
 docs/api/
+/**/*.nupkg

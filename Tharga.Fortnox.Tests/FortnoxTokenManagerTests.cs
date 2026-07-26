@@ -140,7 +140,7 @@ public class FortnoxTokenManagerTests
     [Fact]
     public async Task Different_Keys_Are_Independent()
     {
-        var (manager, connectionService) = CreateManager();
+        var (manager, _) = CreateManager();
         var token1 = CreateTokenData(accessToken: "token-a");
         var token2 = CreateTokenData(accessToken: "token-b");
 
