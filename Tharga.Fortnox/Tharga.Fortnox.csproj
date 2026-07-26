@@ -6,7 +6,7 @@
 		<Company>Thargelion AB</Company>
 		<Product>Tharga Fortnox</Product>
 		<Description>Handling of Fortnox authentication keys.</Description>
-		<PackageIconUrl>https://thargelion.net/assets/component-fortnox.png</PackageIconUrl>
+		<PackageIcon>icon.png</PackageIcon>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<GenerateDocumentationFile>True</GenerateDocumentationFile>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
@@ -24,6 +24,10 @@
 
 	<ItemGroup>
 		<None Include="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Include="icon.png">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
