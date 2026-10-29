@@ -152,6 +152,19 @@ public class FortnoxConnectionServiceTests
             Assert.False(result.IsSuccess);
             Assert.Equal("BadRequest", result.Code);
         }
+
+        [Fact]
+        public async Task Returns_Fail_On_Error_Response_Without_Reason_Phrase()
+        {
+            var response = new HttpResponseMessage((HttpStatusCode)520);
+            var factory = CreateMockHttpClientFactory(response);
+            var service = CreateService(factory);
+
+            var result = await service.ConnectAsync(new FortnoxAssignment { Code = "auth-code" });
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("520", result.Code);
+        }
     }
 
     public class RefreshTokenAsync
@@ -196,6 +209,19 @@ public class FortnoxConnectionServiceTests
             Assert.False(result.IsSuccess);
             Assert.Equal("Unauthorized", result.Code);
         }
+
+        [Fact]
+        public async Task Returns_Fail_On_Error_Response_Without_Reason_Phrase()
+        {
+            var response = new HttpResponseMessage((HttpStatusCode)520);
+            var factory = CreateMockHttpClientFactory(response);
+            var service = CreateService(factory);
+
+            var result = await service.RefreshTokenAsync("refresh-token");
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("520", result.Code);
+        }
     }
 
     public class DisconnectAsync
@@ -226,6 +252,19 @@ public class FortnoxConnectionServiceTests
 
             Assert.False(result.IsSuccess);
             Assert.Equal("InternalServerError", result.Code);
+        }
+
+        [Fact]
+        public async Task Returns_Fail_On_Error_Response_Without_Reason_Phrase()
+        {
+            var response = new HttpResponseMessage((HttpStatusCode)520);
+            var factory = CreateMockHttpClientFactory(response);
+            var service = CreateService(factory);
+
+            var result = await service.DisconnectAsync("refresh-token");
+
+            Assert.False(result.IsSuccess);
+            Assert.Equal("520", result.Code);
         }
     }
 }
