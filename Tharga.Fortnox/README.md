@@ -1,6 +1,6 @@
 # Tharga.Fortnox
 
-OAuth token management for the [Fortnox](https://www.fortnox.se) API. Built for .NET 10. Handles the connection flow (`BuildConnectUriAsync` → `ConnectAsync` → `DisconnectAsync`), persistent access-token caching with thread-safe proactive refresh, and a small `Result<T>` surface for explicit success/failure handling.
+OAuth token management for the [Fortnox](https://www.fortnox.se) API. Supports .NET 10 and .NET 11 (targets `net10.0` and `net11.0`). Handles the connection flow (`BuildConnectUriAsync` → `ConnectAsync` → `DisconnectAsync`), persistent access-token caching with thread-safe proactive refresh, and a small `Result<T>` surface for explicit success/failure handling.
 
 This package handles **authentication only** — pair it with any Fortnox REST client of your choice.
 
