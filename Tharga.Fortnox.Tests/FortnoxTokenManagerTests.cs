@@ -125,6 +125,25 @@ public class FortnoxTokenManagerTests
     }
 
     [Fact]
+    public async Task Keeps_Refreshed_Token_When_SaveToken_Throws()
+    {
+        var (manager, connectionService) = CreateManager();
+        var expiredToken = CreateTokenData(expiresInSeconds: -10);
+        var refreshedToken = CreateTokenData(accessToken: "new-access", refreshToken: "new-refresh");
+
+        connectionService.RefreshTokenAsync("refresh-token").Returns(Result<TokenData>.Success(refreshedToken));
+
+        await Assert.ThrowsAsync<InvalidOperationException>(() =>
+            manager.GetAccessTokenAsync("key1", () => Task.FromResult(expiredToken), _ => throw new InvalidOperationException("Save failed.")));
+
+        var result = await manager.GetAccessTokenAsync("key1", () => Task.FromResult(expiredToken), _ => Task.CompletedTask);
+
+        Assert.True(result.IsSuccess);
+        Assert.Equal("new-access", result.Value);
+        await connectionService.Received(1).RefreshTokenAsync(Arg.Any<string>());
+    }
+
+    [Fact]
     public async Task Cache_Hit_Does_Not_Call_LoadToken()
     {
         var (manager, _) = CreateManager();

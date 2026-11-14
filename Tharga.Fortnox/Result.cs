@@ -24,7 +24,7 @@ public record Result<TData> : Result
     /// <param name="message"></param>
     /// <param name="code"></param>
     /// <returns></returns>
-    public new static Result<TData> Fail(string message, string code) => new() { Message = message, Code = code };
+    public new static Result<TData> Fail(string message, string code) => new() { Message = FailMessage(message, code), Code = code };
 }
 
 /// <summary>
@@ -32,6 +32,8 @@ public record Result<TData> : Result
 /// </summary>
 public record Result
 {
+    private const string DefaultFailMessage = "The request failed.";
+
     /// <summary>
     /// Response message.
     /// </summary>
@@ -58,5 +60,10 @@ public record Result
     /// <param name="message"></param>
     /// <param name="code"></param>
     /// <returns></returns>
-    public static Result Fail(string message, string code) => new() { Message = message, Code = code };
+    public static Result Fail(string message, string code) => new() { Message = FailMessage(message, code), Code = code };
+
+    private protected static string FailMessage(string message, string code) =>
+        !string.IsNullOrEmpty(message) ? message
+        : !string.IsNullOrEmpty(code) ? code
+        : DefaultFailMessage;
 }

@@ -49,6 +49,28 @@ public class ResultTests
 
         Assert.Equal("404", result.Code);
     }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Fail_Without_Message_IsSuccess_ReturnsFalse(string? message)
+    {
+        var result = Result.Fail(message, "520");
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("520", result.Message);
+    }
+
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData("", "")]
+    public void Fail_Without_Message_Or_Code_IsSuccess_ReturnsFalse(string? message, string? code)
+    {
+        var result = Result.Fail(message, code);
+
+        Assert.False(result.IsSuccess);
+        Assert.False(string.IsNullOrEmpty(result.Message));
+    }
 }
 
 public class ResultOfTTests
@@ -92,5 +114,27 @@ public class ResultOfTTests
 
         Assert.Equal("not found", result.Message);
         Assert.Equal("404", result.Code);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    public void Fail_Without_Message_IsSuccess_ReturnsFalse(string? message)
+    {
+        var result = Result<string>.Fail(message, "520");
+
+        Assert.False(result.IsSuccess);
+        Assert.Equal("520", result.Message);
+    }
+
+    [Theory]
+    [InlineData(null, null)]
+    [InlineData("", "")]
+    public void Fail_Without_Message_Or_Code_IsSuccess_ReturnsFalse(string? message, string? code)
+    {
+        var result = Result<string>.Fail(message, code);
+
+        Assert.False(result.IsSuccess);
+        Assert.False(string.IsNullOrEmpty(result.Message));
     }
 }

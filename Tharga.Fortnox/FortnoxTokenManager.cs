@@ -45,8 +45,8 @@ internal class FortnoxTokenManager : IFortnoxTokenManager
             if (!refreshResult.IsSuccess)
                 return Result<string>.Fail(refreshResult.Message, refreshResult.Code);
 
-            await saveToken(refreshResult.Value);
             entry.TokenData = refreshResult.Value;
+            await saveToken(refreshResult.Value);
             return Result<string>.Success(refreshResult.Value.AccessToken);
         }
         finally
